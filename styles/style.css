@@ -3,22 +3,40 @@ body {
     /* If this isn't here, element goes all the way to the right: */
     position: absolute
 }
+
+#news_child {
+    position: absolute;
+    bottom: 0;
+    background-color: aqua
+}
 #greeting {
     /* This is required: */
     position: relative;
-    background-color: green;
+    background-color: black;
     /* This puts it on top of the canvas: */
     z-index: 1; 
+    font-family: Helvetica;
+    font-size: 20px;
+    color: white;
+    opacity: 0;
 }
 
 #weather {
     position: relative;
     background-color: blue;
     z-index: 1;
+    font-family: Helvetica;
+    font-size: 40px;
+    color: white;
+    padding-left: 100px;
+    opacity: 0;
 }
 
 #news {
     position: relative;
     background-color: purple;
     z-index: 1;
+    font-family: Helvetica;
+    font-size: 20px;
+    opacity: 0;
 }
