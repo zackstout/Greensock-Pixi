@@ -4,11 +4,21 @@ body {
     position: absolute
 }
 
+/* p {
+    background-color: black;
+} */
+
 #news_child {
     position: absolute;
     bottom: 0;
     background-color: aqua;
     color: white;
+    display: inline;
+    /* padding-left: 120px; */
+}
+#block {
+    width: 100px;
+    background-color: blueviolet;
 }
 #greeting {
     /* This is required: */
@@ -25,19 +35,22 @@ body {
 
 #weather_txt {
     /* position: relative; */
-    background-color: blue;
+    /* background-color: blue; */
     /* z-index: 1; */
-    font-family: Helvetica;
-    font-size: 40px;
-    color: white;
+    
     /* padding-left: 100px; */
     opacity: 0;
+    float: right;
 }
 
 #weather {
     position: absolute;
     z-index: 1;
     display: inline;
+    background-color: green;
+    font-family: Helvetica;
+    font-size: 40px;
+    color: white;
 }
 
 #news {
@@ -47,5 +60,7 @@ body {
     font-family: Helvetica;
     font-size: 30px;
     opacity: 0;
+    /* padding: 20px;
+    height: 60px; */
 
 }

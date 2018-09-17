@@ -80,15 +80,20 @@ function setup() {
 
     const $grt = $('#greeting');
     const $weather_cont = $('#weather')
-    const $weather = $('#weather_txt');
+    // const $weather = $('#weather_txt');
     const $news = $('#news');
 
 
     // Need to be more thoughtful about how this relates to ICON:
-    $weather.text('77')
+    const $temp = $("<span>").html('77 &deg;')
+    $weather_cont.append($temp)
+    // $weather_cont.append('77 &deg;')
+    // .css('margin-top: 0px')
+    tl.set($temp, {css: {"position": "absolute", "padding-top": "25px"}})
+
     $grt.text('hi there');
 
-    tl.set($weather_cont, {width: 300})
+    tl.set($weather_cont, {width: 190, height: 100})
 
     $im = $('<img>')
         .attr('src', 'http://fridge.knife.screenfeed.com/content/weather-icons/basic/128/30.png')
@@ -96,12 +101,28 @@ function setup() {
         .attr('width', '100px')
         // .attr('opacity', '0.8')
     
+    tl.set($im, {css: { "padding-top": "10px"}})
+
     // console.log($im)
-    $weather.prepend($im);
+    $weather_cont.prepend($im);
 
     // Remember, need angle brackets here:
     const $p = $('<p>').text('some news news news!')
+    .css('background-color', 'blue')
+    // .css('padding', '0px')
     $('#news_child').append($p);
+
+    // tl.set('#news_child', {left: "100px"})
+    
+    tl.set($weather_cont, {alpha: 0})
+
+
+    // const $bl = $('<div>')
+    // // .style('background-color', 'blue')
+    // // .attr('width', '100px')
+    // .attr('id', 'block')
+    // .text(' aah')
+    // $('#news_child').prepend($bl)
 
     const $p2 = $('<p>').text('ahoy hoy!')
     tl.set($p2, {alpha: 0})
@@ -114,7 +135,7 @@ function setup() {
     tl.set($news, { x: 130, y: window.innerHeight - 100 })
     tl.set($news, {width: "500px"})
 
-    tl.set($weather_cont, {x: 500, y: 100})
+    tl.set($weather_cont, {x: window.innerWidth - 200, y: 100})
     // tl.set($weather, { x: spWeather.x + 40 , y: spWeather.y + 50, width: 150})
     tl.set($grt, { x: window.innerWidth / 2 - 50, y: window.innerHeight / 2 - 50 })
         // .to($grt, 1, { opacity: 0 })
@@ -124,12 +145,18 @@ function setup() {
     tl.to($grt, 0.8, {opacity: 0}, "+=1")
     tl.to($news, 0.8, {opacity: 1}, "+=0.2")
     tl.set('#news_child', {width: 400})
+    // tl.set('#news', {height: 0})
+
 
     // tl.set($weather)
-    tl.to($weather, 0.6, {opacity: 1}, "+=0.4")
+    tl.to($weather_cont, 0.6, {opacity: 1}, "+=0.4")
 
     // tl.to($news, 1.3, {css: {height: "100px"}})
     // tl.to($news, 1.3, {y: "+=100px"}, '-=1')
+    // tl.fromTo("#news", 0.8, {height: "0px"}, {height: "60px"})
+
+
+    // This is why we wanted to put it in a parent, to get this to work:
     tl.fromTo("#news_child", 0.8, {height: "0px"}, {height: "100px"})
 
     tl.to($p, 0.5, {alpha: 1})
@@ -155,8 +182,8 @@ function setup() {
     // If we don't remove it, next one gets pushed too far down....
     // $p.remove();
     $('#news_child').append($p2);
-    tl.set($p2, {y: "-30px"})
-    tl.set($p, {height: "0px"})
+    tl.set($p2, {y: "-30px"}) // Feels bad to have to hard code this 30
+    tl.set($p, {height: "0px"}) // This whole bit is so ugly
 
     // console.log(tl.getChildren())
     tl.to($p2, 0.6, {alpha: 1});
@@ -165,5 +192,21 @@ function setup() {
 
     tl.to(sp3, 0.6, { alpha: 0 }, "+=2"); // Wait 2 seconds before starting.
     tl.to(sp1, 0.6, { alpha: 1 }, "-=0.5");
+
+    // Maybe the idea is to load all text onto page, similar with starting images...
+    // $p.text('well hello friendo!');
+    // tl.set($p, {height: "50px", y: "-30px"});
+    // tl.set($p2, {height: "0px"})
+    // tl.to($p2, 0.6, {alpha: 0})
+    // tl.to($p, 0.6, {alpha: 1})
+
+
+
+
+    tl.to(sp1, 0.6, { alpha: 0 }, "+=2"); // Wait 2 seconds before starting.
+    tl.to(sp2, 0.6, { alpha: 1 }, "-=0.5");
+
+    tl.to(sp2, 0.6, { alpha: 0 }, "+=2"); // Wait 2 seconds before starting.
+    tl.to(sp3, 0.6, { alpha: 1 }, "-=0.5");
 
 }
