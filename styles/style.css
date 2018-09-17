@@ -1,0 +1,24 @@
+
+body {
+    /* If this isn't here, element goes all the way to the right: */
+    position: absolute
+}
+#greeting {
+    /* This is required: */
+    position: relative;
+    background-color: green;
+    /* This puts it on top of the canvas: */
+    z-index: 1; 
+}
+
+#weather {
+    position: relative;
+    background-color: blue;
+    z-index: 1;
+}
+
+#news {
+    position: relative;
+    background-color: purple;
+    z-index: 1;
+}
