@@ -21,8 +21,8 @@ window.onload = function () {
     // Can pass in an array:
     PIXI.loader
         .add("styles/jmoney.jpg")
-        .add("styles/jesus.jpg")
-        .add("styles/leda_hot.jpg")
+        .add("styles/kirsten-wonder.png")
+        .add("styles/osprey.jpg")
         .load(setup);
 }
 
@@ -38,11 +38,11 @@ function setup() {
     );
 
     sp2 = new PIXI.Sprite(
-        PIXI.loader.resources["styles/jesus.jpg"].texture
+        PIXI.loader.resources["styles/kirsten-wonder.png"].texture
     );
 
     sp3 = new PIXI.Sprite(
-        PIXI.loader.resources["styles/leda_hot.jpg"].texture
+        PIXI.loader.resources["styles/osprey.jpg"].texture
     );
 
 
