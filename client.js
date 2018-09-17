@@ -1,11 +1,24 @@
 
-let app;
+let app, all_imgs;
 
 window.onload = function () {
+    all_imgs = ['styles/jmoney.jpg', 'styles/kirsten-wonder.png', 'styles/osprey.jpg'];
 
     // NOTE: Better method would use a SPRITE SHEET
 
     // NOTE: Instead of using a loop, we could use a recursive (call yourself when you're done) function to handle the cycling. 
+
+    // NOTE: A better solution than jQuery may be the PIXI DOM Plug-in
+
+
+    // Nice, so we can still use async/await to good effect:
+    $.get('https://files-mihchsciio.now.sh/demo-project.json')
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => {
+        console.log(err)
+    })
 
     app = new PIXI.Application();
     // creates a CANVAS element:
@@ -20,9 +33,9 @@ window.onload = function () {
 
     // Can pass in an array:
     PIXI.loader
-        .add("styles/jmoney.jpg")
-        .add("styles/kirsten-wonder.png")
-        .add("styles/osprey.jpg")
+        .add(all_imgs[0])
+        .add(all_imgs[1])
+        .add(all_imgs[2])
         .load(setup);
 }
 
@@ -34,15 +47,15 @@ function setup() {
 
     // Ok, Sprite gets passed a Texture:
     sp1 = new PIXI.Sprite(
-        PIXI.loader.resources["styles/jmoney.jpg"].texture
+        PIXI.loader.resources[all_imgs[0]].texture
     );
 
     sp2 = new PIXI.Sprite(
-        PIXI.loader.resources["styles/kirsten-wonder.png"].texture
+        PIXI.loader.resources[all_imgs[1]].texture
     );
 
     sp3 = new PIXI.Sprite(
-        PIXI.loader.resources["styles/osprey.jpg"].texture
+        PIXI.loader.resources[all_imgs[2]].texture
     );
 
 
@@ -71,16 +84,14 @@ function setup() {
 
     $weather.text('Weather hi there')
     $news.text('This is very important news!!!!')
+    $grt.text('hi there');
+
     tl.set($news, { x: 100, y: 100 })
     tl.set($weather, { x: window.innerWidth - 150, y: 100 })
-
-
-    // Centers the greeting because 100 is half the width of the box:
     tl.set($grt, { x: window.innerWidth / 2, y: window.innerHeight / 2 - 100 })
-    .to($grt, 1, { opacity: 0 })
-    .to($grt, 1, { opacity: 1 });
+        .to($grt, 1, { opacity: 0 })
+        .to($grt, 1, { opacity: 1 });
 
-    $grt.text('hi there');
 
 
     // NOTE: I am finding it really difficult to add background color of black to this rectangle ......
