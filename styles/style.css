@@ -1,12 +1,13 @@
 
 body {
     /* If this isn't here, element goes all the way to the right: */
-    position: absolute
+    position: absolute;
+    font-size: 5px;
 }
 
-/* p {
-    background-color: black;
-} */
+canvas {
+    margin: 0px;
+}
 
 #news_child {
     position: absolute;
@@ -16,10 +17,7 @@ body {
     display: inline;
     /* padding-left: 120px; */
 }
-#block {
-    width: 100px;
-    background-color: blueviolet;
-}
+
 #greeting {
     /* This is required: */
     position: relative;
@@ -27,10 +25,12 @@ body {
     /* This puts it on top of the canvas: */
     z-index: 1; 
     font-family: Helvetica;
-    font-size: 20px;
+    font-size: 30px;
     color: white;
     opacity: 0;
-    width: 100px;
+    /* Why on earth is this pushing the canvas down?: */
+    /* width: 150px; */
+    /* width: auto; */
 }
 
 #weather_txt {

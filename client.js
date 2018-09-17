@@ -2,14 +2,11 @@
 let app, all_imgs;
 
 window.onload = function () {
-    all_imgs = ['styles/jmoney.jpg', 'styles/kirsten-wonder.png', 'styles/osprey.jpg', 'http://fridge.knife.screenfeed.com/content/weather-icons/basic/128/30.png'];
-
-    // NOTE: Better method would use a SPRITE SHEET
+    all_imgs = ['styles/jmoney.jpg', 'styles/pics_hugh.jpg', 'styles/osprey.jpg', 'http://fridge.knife.screenfeed.com/content/weather-icons/basic/128/30.png'];
 
     // NOTE: Instead of using a loop, we could use a recursive (call yourself when you're done) function to handle the cycling. 
 
-    // NOTE: A better solution than jQuery may be the PIXI DOM Plug-in
-
+    // NOTE: Maybe we need a CONTAINER???
 
     // Nice, so we can still use async/await to good effect:
     $.get('https://files-mihchsciio.now.sh/demo-project.json')
@@ -31,22 +28,15 @@ window.onload = function () {
     app.renderer.autoResize = true;
     app.renderer.resize(window.innerWidth, window.innerHeight);
 
-    // Can pass in an array:
     PIXI.loader
-        .add(all_imgs[0])
-        .add(all_imgs[1])
-        .add(all_imgs[2])
-        .add(all_imgs[3])
+        .add(all_imgs)
         .load(setup);
 }
 
-
+// First step: Zip up all sprites and titles into an array of objects.
 
 function setup() {
 
-    // NOTE: Don't forget to make a Sprite for the weather icon:
-
-    // Ok, Sprite gets passed a Texture:
     sp1 = new PIXI.Sprite(
         PIXI.loader.resources[all_imgs[0]].texture
     );
@@ -59,17 +49,16 @@ function setup() {
         PIXI.loader.resources[all_imgs[2]].texture
     );
 
+    console.log(sp1.scale)
 
-
+    // Ok this will work:
+    // We can get height and width of each photo and then figure out how much it needs to be scaled.
+    sp1.scale.x = 1.5;
+    sp1.scale.y = 1.5;
 
     sp1.alpha = 0;
     sp3.alpha = 0;
 
-    
-    // Ok, there will be issues about resizing, like whether image is fatter or taller:
-    sp1.height = window.innerHeight;
-    sp2.height = window.innerHeight;
-    sp3.height = window.innerHeight;
 
     app.stage.addChild(sp1);
     app.stage.addChild(sp2);
@@ -78,20 +67,17 @@ function setup() {
 
     var tl = new TimelineLite();
 
+
     const $grt = $('#greeting');
     const $weather_cont = $('#weather')
-    // const $weather = $('#weather_txt');
     const $news = $('#news');
 
-
-    // Need to be more thoughtful about how this relates to ICON:
     const $temp = $("<span>").html('77 &deg;')
     $weather_cont.append($temp)
-    // $weather_cont.append('77 &deg;')
-    // .css('margin-top: 0px')
+
     tl.set($temp, {css: {"position": "absolute", "padding-top": "25px"}})
 
-    $grt.text('hi there');
+    $grt.text('News & Weather');
 
     tl.set($weather_cont, {width: 190, height: 100})
 
@@ -117,16 +103,15 @@ function setup() {
     tl.set($weather_cont, {alpha: 0})
 
 
-    // const $bl = $('<div>')
-    // // .style('background-color', 'blue')
-    // // .attr('width', '100px')
-    // .attr('id', 'block')
-    // .text(' aah')
-    // $('#news_child').prepend($bl)
 
     const $p2 = $('<p>').text('ahoy hoy!')
     tl.set($p2, {alpha: 0})
-
+    const $p3 = $('<p>').text('well well well!')
+    tl.set($p3, {alpha: 0})
+    const $p4 = $('<p>').text('you know me!')
+    tl.set($p4, {alpha: 0})
+    const $p5 = $('<p>').text('i\'m just tryna...!')
+    tl.set($p5, {alpha: 0})
 
 
     tl.set($p, {alpha: 0})
@@ -147,13 +132,7 @@ function setup() {
     tl.set('#news_child', {width: 400})
     // tl.set('#news', {height: 0})
 
-
-    // tl.set($weather)
     tl.to($weather_cont, 0.6, {opacity: 1}, "+=0.4")
-
-    // tl.to($news, 1.3, {css: {height: "100px"}})
-    // tl.to($news, 1.3, {y: "+=100px"}, '-=1')
-    // tl.fromTo("#news", 0.8, {height: "0px"}, {height: "60px"})
 
 
     // This is why we wanted to put it in a parent, to get this to work:
@@ -162,13 +141,7 @@ function setup() {
     tl.to($p, 0.5, {alpha: 1})
     // tl.fromTo($news, 1.3, {scaleY: 0}, {scaleY: 1})
 
-    // We need this text to NOT show up until the time is right:
-    // $("#news_child").text('text')
-    
-
-
-
-    // NOTE: I am finding it really difficult to add background color of black to this rectangle ......
+ 
 
 
     // Two changes/cycles:
@@ -184,8 +157,6 @@ function setup() {
     $('#news_child').append($p2);
     tl.set($p2, {y: "-30px"}) // Feels bad to have to hard code this 30
     tl.set($p, {height: "0px"}) // This whole bit is so ugly
-
-    // console.log(tl.getChildren())
     tl.to($p2, 0.6, {alpha: 1});
 
     
@@ -194,17 +165,26 @@ function setup() {
     tl.to(sp1, 0.6, { alpha: 1 }, "-=0.5");
 
     // Maybe the idea is to load all text onto page, similar with starting images...
-    // $p.text('well hello friendo!');
-    // tl.set($p, {height: "50px", y: "-30px"});
-    // tl.set($p2, {height: "0px"})
-    // tl.to($p2, 0.6, {alpha: 0})
-    // tl.to($p, 0.6, {alpha: 1})
+
+    $('#news_child').append($p3);
+    tl.set($p3, {y: "-60px"}) // Feels bad to have to hard code this 30 
+    // -- The real problem is going to be accounting for possible multi-line titles....
+    tl.set($p2, {height: 0, alpha: 0})
+    tl.to($p3, 0.6, {alpha: 1});
 
 
 
 
     tl.to(sp1, 0.6, { alpha: 0 }, "+=2"); // Wait 2 seconds before starting.
     tl.to(sp2, 0.6, { alpha: 1 }, "-=0.5");
+
+    $('#news_child').append($p4);
+    tl.set($p4, {y: "-90px"}) // Feels bad to have to hard code this 30 
+    // -- The real problem is going to be accounting for possible multi-line titles....
+    tl.set($p3, {height: 0, alpha: 0})
+    tl.to($p4, 0.6, {alpha: 1});
+
+
 
     tl.to(sp2, 0.6, { alpha: 0 }, "+=2"); // Wait 2 seconds before starting.
     tl.to(sp3, 0.6, { alpha: 1 }, "-=0.5");
