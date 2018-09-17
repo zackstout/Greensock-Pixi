@@ -7,7 +7,8 @@ body {
 #news_child {
     position: absolute;
     bottom: 0;
-    background-color: aqua
+    background-color: aqua;
+    color: white;
 }
 #greeting {
     /* This is required: */
@@ -19,17 +20,24 @@ body {
     font-size: 20px;
     color: white;
     opacity: 0;
+    width: 100px;
 }
 
-#weather {
-    position: relative;
+#weather_txt {
+    /* position: relative; */
     background-color: blue;
-    z-index: 1;
+    /* z-index: 1; */
     font-family: Helvetica;
     font-size: 40px;
     color: white;
-    padding-left: 100px;
+    /* padding-left: 100px; */
     opacity: 0;
+}
+
+#weather {
+    position: absolute;
+    z-index: 1;
+    display: inline;
 }
 
 #news {
@@ -37,6 +45,7 @@ body {
     background-color: purple;
     z-index: 1;
     font-family: Helvetica;
-    font-size: 20px;
+    font-size: 30px;
     opacity: 0;
+
 }
