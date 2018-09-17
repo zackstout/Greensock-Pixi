@@ -11,10 +11,6 @@ window.onload = function () {
     // creates a CANVAS element:
     document.body.appendChild(app.view);
 
-    // Doesn't work:
-    // var ctx = app.view.getContext("2d");
-    // console.log(ctx);
-
     // from pixi docs tutorial:
     app.renderer.backgroundColor = 0x061639;
     app.renderer.view.style.position = "absolute";
@@ -32,10 +28,9 @@ window.onload = function () {
 
 
 
-
 function setup() {
-    // let texture = PIXI.utils.TextureCache["styles/jmoney.jpg"];
-    // sp1 = new PIXI.Sprite(texture);
+
+    // NOTE: Don't forget to make a Sprite for the weather icon:
 
     // Ok, Sprite gets passed a Texture:
     sp1 = new PIXI.Sprite(
@@ -50,19 +45,7 @@ function setup() {
         PIXI.loader.resources["styles/leda_hot.jpg"].texture
     );
 
-    // greeting = new PIXI.Sprite();
-    // console.log(greeting)
 
-    // Thanks W3 Skoolz:
-    // var greeting = document.createElement("P");                       // Create a <p> element
-    // var t = document.createTextNode("This is a greetinggraph");       // Create a text node
-    // greeting.appendChild(t);                                          // Append the text to <p>
-    // document.body.appendChild(greeting);
-
-    // sp1 = PIXI.Sprite.fromImage('styles/jmoney.jpg')
-
-    // sp1.visible = false;
-    // sp3.visible = false;
     sp1.alpha = 0;
     sp3.alpha = 0;
 
@@ -79,21 +62,19 @@ function setup() {
     var tl = new TimelineLite();
 
     const $grt = $('#greeting');
-
-    console.log($grt);
-
-    // TweenLite.to($grt, 1, {x: 200, y: 200})
+    const $weather = $('#weather');
+    const $news = $('#news');
 
 
     console.log(app.view);
     console.log(app.view.getContext('webgl')) // Oooh maybe just had to use webgl instead of 2d
-    // $grt.offsetTop = 100;
-    // let ctx = app.view.getContext('webgl');
-    // ctx.fillStyle = 'red'
-    // ctx.drawRect(100, 100, 200, 200);
+
+    $weather.text('Weather hi there')
+    $news.text('This is very important news!!!!')
+    tl.set($news, { x: 100, y: 100 })
+    tl.set($weather, { x: window.innerWidth - 150, y: 100 })
 
 
-    // app.stage.addChild($grt);
     // Centers the greeting because 100 is half the width of the box:
     tl.set($grt, { x: window.innerWidth / 2, y: window.innerHeight / 2 - 100 })
     .to($grt, 1, { opacity: 0 })
@@ -102,22 +83,7 @@ function setup() {
     $grt.text('hi there');
 
 
-    // Needn't even add it to TL to get it to work:
-    // let text1 = new PIXI.Text('hi there');
-    // app.stage.addChild(text1);
-    // text1.x = 200;
-    // text1.y = 500;
-    // console.log(text1)
-    // text1.style.fill = 'red';
-
-    // None of this worked:
-    // text1.tintRGB = 10110111;
-    // text1.style._backgroundColor = 'black';
-    // text1.text('cyan');
-
     // NOTE: I am finding it really difficult to add background color of black to this rectangle ......
-
-    // console.log(app.renderer)
 
 
     // Two changes/cycles:
@@ -127,20 +93,4 @@ function setup() {
     tl.to(sp3, 0.6, { alpha: 0 }, "+=2"); // Wait 2 seconds before starting.
     tl.to(sp1, 0.6, { alpha: 1 }, "-=0.5");
 
-    // TweenMax.to(pixiObject, 1, {pixi:{scaleX:2, scaleY:1.5, skewX:30, rotation:60}});
-
-
-
 }
-
-// let sp1;
-
-
-// // anySprite.visible = false; // best way to make sprites disappear
-
-
-// const im = PIXI.Sprite.fromImage('styles/leda_hot.jpg')
-// const im2 = PIXI.Sprite.fromImage('styles/jmoney.jpg');
-// const im3 = PIXI.Sprite.fromImage('styles/jesus.jpg')
-
-// app.stage.addChild(sp1);
