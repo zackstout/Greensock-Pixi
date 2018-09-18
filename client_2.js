@@ -26,6 +26,7 @@ $(document).ready(function() {
   app.renderer.backgroundColor = 0x061639;
   app.renderer.view.style.position = "absolute";
   app.renderer.view.style.display = "block";
+  // app.renderer.view.style.padding = '-100px 0 0 0 ';
   app.renderer.autoResize = true;
   app.renderer.resize(w, h);
 });
@@ -94,7 +95,7 @@ function beginAnimation() {
   tl.to(sprites[0], 1, {alpha: 1}, "+=0.5");
 
   // Bring in weather:
-  tl.to($weather_cont, 1, {alpha: 1}, "+=0.5");
+  tl.to($weather_cont, 1, {alpha: 0.8}, "+=0.5"); // only bring alpha up to 0.8
 
   // Bring in news:
   tl.fromTo("#news_child", 0.8, {height: "0px"}, {height: "100px"});
@@ -154,18 +155,21 @@ function initializeWeather() {
   .attr('src', `${data.weather.icon}`)
   .attr('height', '100px')
   .attr('width', '100px');
-  tl.set($im, {css: { "padding-top": "10px", "position": "absolute"}});
+  // tl.set($im, {css: { "padding-top": "10px", "position": "absolute"}});
+  tl.set($im, {css: { "padding-top": "20px", "padding-left": "20px"}});
 
   // Create text:
   const $temp = $("<span>").html(`${data.weather.temp} &deg;`);
-  tl.set($temp, {css: {"position": "absolute", "padding-top": "20px"}});
+  // tl.set($temp, {css: {"position": "absolute", "padding-top": "20px"}});
+  tl.set($temp, {css: {"position": "absolute", "padding-top": "25px", "padding-left": "30px"}});
+
   tl.set($temp, {left: 100, width: 100})
 
   // Add both to DOM:
   $weather_cont.append($temp);
   $weather_cont.prepend($im);
 
-  tl.set($weather_cont, {left: w - 220, alpha: 0})
+  tl.set($weather_cont, {left: w - 250, alpha: 0, top: 100, width: 230})
 }
 
 
@@ -178,10 +182,11 @@ function initializeNews() {
 
   // Set initial positions:
   tl.set($news, { x: 50, y: h - 100 });
-  tl.set('#news_child', {width: w - 150}); // needed
+  // HMm we need to contain the text within this region as well:
+  tl.set('#news_child', { width: w - 60 }); // needed
 
   tl.set($news_text, { css: {"position": "relative"}})
-  tl.set($news_text, {left: 50, top: -20})
+  tl.set($news_text, {left: 60, top: -15})
 }
 
 // =======================================================================================

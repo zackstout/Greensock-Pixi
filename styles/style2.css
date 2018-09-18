@@ -1,0 +1,50 @@
+
+body {
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+}
+
+/*Adding this to prevent extra titles from showing up:*/
+p {
+  opacity: 0
+}
+
+#greeting {
+  /*Once again we have this issue -- this creates space above canvas:*/
+  font-size: 25px;
+}
+
+#news {
+  font-size: 20px;
+}
+
+#weather {
+  font-size: 50px;
+  background-color: black;
+  /*Huh, this puts it above the canvas*/
+  height: 120px;
+  /*and if we put this, we don't see background:*/
+  position: absolute;
+  /*opacity: 0.8;*/
+}
+
+.pix {
+  font-family: Helvetica;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+#news_child {
+    /*Needed:*/
+    position: absolute;
+    /*Definitely needed:*/
+    bottom: 0;
+    background-color: black;
+    opacity: 0.8;
+    display: inline;
+    font-size: 30px;
+    padding-right: 20px;
+
+}
