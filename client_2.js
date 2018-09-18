@@ -33,9 +33,12 @@ $(document).ready(function() {
 
 async function prepareData() {
   let articles, weather;
+  const news_url = 'https://files-mihchsciio.now.sh/demo-project.json';
+  const weather_url = 'http://kitchen.screenfeed.com/weather/v2/data/p060kk4gfpvsphh415mnj7547c.json?current=true';
+
   try {
-    articles = await $.get('https://files-mihchsciio.now.sh/demo-project.json');
-    weather = await $.get('http://kitchen.screenfeed.com/weather/v2/data/p060kk4gfpvsphh415mnj7547c.json?current=true');
+    articles = await $.get(news_url);
+    weather = await $.get(weather_url);
 
     data = {
       articles: [],
@@ -96,14 +99,6 @@ function beginAnimation() {
   tl.fromTo("#news_child", 0.8, {height: "0px"}, {height: "100px"});
   tl.to($news_text, 0.5, {alpha: 1});
 
-
-  // WAIT i'm pretty sure ADDTITLETODOM is useless, because we are now just changing the text of one element.
-  // We only need to look at the titles array.
-  all_titles.push($news_text) // necessary to get first one in the array
-  for (let i=0; i < 10; i++) {
-    addTitleToDom(i);
-  }
-
   for (let i=1; i < 10; i++) {
     addToTimeline(i);
   }
@@ -127,26 +122,17 @@ function resize(sprite) {
 
 // =======================================================================================
 
-function addTitleToDom(i) {
-  const $new_title = $('<p>').text(titles[i]);
-  // tl.set($new_title, {alpha: 0});
-  $news_text.append($new_title);
-  all_titles.push($new_title);
-}
-
-// =======================================================================================
-
 function addToTimeline(i) {
   // Fade out title:
-  tl.to(all_titles[0], 0.6, {alpha: 0}, "+=3");
+  tl.to($news_text, 0.6, {alpha: 0}, "+=3");
 
   // Cross-fade background:
   tl.to(sprites[0], 0.6, {alpha: 0}, "+=0.3");
   tl.to(sprites[1], 0.6, {alpha: 1}, "-=0.5");
 
   // Replace and fade in new title:
-  tl.to(all_titles[0], 0.2, {text: all_titles[i + 1][0].innerHTML}); // Finally got there, it's i + 1
-  tl.to(all_titles[0], 0.6, {alpha: 1})
+  tl.to($news_text, 0.2, {text: titles[i]});
+  tl.to($news_text, 0.6, {alpha: 1})
 
   sprites.splice(0, 1);
 }
@@ -162,7 +148,7 @@ function initializeGreeting() {
 
 function initializeWeather() {
   $im = $('<img>')
-  .attr('src', 'http://fridge.knife.screenfeed.com/content/weather-icons/basic/128/30.png')
+  .attr('src', `${data.weather.icon}`)
   .attr('height', '100px')
   .attr('width', '100px');
 
