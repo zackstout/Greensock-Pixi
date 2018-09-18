@@ -53,7 +53,6 @@ async function prepareData() {
     .load(setup);
 
   } catch {
-    console.log('Failed to grab JSON.');
     throw new Error('Failed to grab JSON.'); // would this work?
   }
 }
@@ -92,13 +91,8 @@ function beginAnimation() {
   tl.to($weather_cont, 1, {alpha: 0.85}, "+=0.5"); // only bring alpha up to 0.9
 
   // Bring in news:
+  tl.set('#news_child', {css: {opacity: 0.8}}) // Have to set opacity to 0 in CSS to make border invisible at first.
   tl.fromTo("#news_child", 0.8, {height: "0px"}, {height: "100px"});
-  tl.to($blue_span, 0.2, {"background-color": "blue"}, "-=0.7")
-  tl.to($blue_span, 0.2, {alpha: 1, height: 0}, "-=0.8");
-
-  // tl.fromTo($blue_span, 0.8, {height: "0px"}, {height: "100px"});
-  tl.fromTo($blue_span, 0.6, {css: {"padding-bottom": "0px"}}, {css: {"padding-bottom": "65px"}}, "-=0.6")
-
   tl.to($news_text, 0.5, {alpha: 1});
 
   // Build the animation timeline:
@@ -130,7 +124,7 @@ function addToTimeline(i) {
 
 function initializeGreeting() {
   $grt.text('News & Weather');
-  tl.set($grt, { x: w / 2 - 100, y: h / 2 - 50, width: 300 }); // Because [100, 50] are roughly dimensions of the greetings Div
+  tl.set($grt, { x: w / 2 - 100, y: h / 2 - 50, width: 300 }); // Because [100, 50] are roughly the dimensions of the greetings Div
   tl.set($grt, {alpha: 0});
 }
 
@@ -164,10 +158,7 @@ function initializeNews() {
   var title = titles[0];
   $news_text = $('<p>').text(title);
 
-  $blue_span = $('<span>').html('');
-  tl.set($blue_span, {css: {"padding-right": "20px", "opacity": 0}})
-  // Not sure we need this rigamarole anymore:
-  $('#news_child').append($blue_span).append($news_text);
+  $('#news_child').append($news_text);
   tl.set($news_text, {alpha: 0, height: 0});
 
   // Set initial positions:
@@ -175,7 +166,7 @@ function initializeNews() {
   tl.set('#news_child', { width: w - 110 }); // needed
 
   tl.set($news_text, { css: {"position": "relative"}})
-  tl.set($news_text, {left: 50, top: -50})
+  tl.set($news_text, {left: 50, top: -15}) // Change top value to account for blue stripe
 }
 
 // =======================================================================================
