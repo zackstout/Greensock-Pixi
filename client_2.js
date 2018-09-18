@@ -18,7 +18,8 @@ $(document).ready(function() {
 
   tl = new TimelineLite();
   app = new PIXI.Application();
-  // creates a CANVAS element:
+
+  // Creates a CANVAS element:
   document.body.appendChild(app.view);
 
   // From Pixi docs tutorial:
@@ -99,6 +100,7 @@ function beginAnimation() {
   tl.fromTo("#news_child", 0.8, {height: "0px"}, {height: "100px"});
   tl.to($news_text, 0.5, {alpha: 1});
 
+  // Build the animation timeline:
   for (let i=1; i < 10; i++) {
     addToTimeline(i);
   }
@@ -127,11 +129,11 @@ function addToTimeline(i) {
   tl.to($news_text, 0.6, {alpha: 0}, "+=3");
 
   // Cross-fade background:
-  tl.to(sprites[0], 0.6, {alpha: 0}, "+=0.3");
-  tl.to(sprites[1], 0.6, {alpha: 1}, "-=0.5");
+  tl.to(sprites[0], 0.6, {alpha: 0}, "-=0.2"); // "-=0.2" syncs up fading of title well with changing background.
+  tl.to(sprites[1], 0.6, {alpha: 1}, "-=1.0"); // Difference between this time-offset and previous time-offset should be about 0.8 to properly align with .
 
   // Replace and fade in new title:
-  tl.to($news_text, 0.2, {text: titles[i]});
+  tl.to($news_text, 0.1, {text: titles[i]}, "-=0.3"); // Make them spawn a bit faster with "-=0.3".
   tl.to($news_text, 0.6, {alpha: 1})
 
   sprites.splice(0, 1);
@@ -147,17 +149,20 @@ function initializeGreeting() {
 
 
 function initializeWeather() {
+  // Create image:
   $im = $('<img>')
   .attr('src', `${data.weather.icon}`)
   .attr('height', '100px')
   .attr('width', '100px');
+  tl.set($im, {css: { "padding-top": "10px", "position": "absolute"}});
 
+  // Create text:
   const $temp = $("<span>").html(`${data.weather.temp} &deg;`);
-  $weather_cont.append($temp);
-
   tl.set($temp, {css: {"position": "absolute", "padding-top": "20px"}});
   tl.set($temp, {left: 100, width: 100})
-  tl.set($im, {css: { "padding-top": "10px", "position": "absolute"}});
+
+  // Add both to DOM:
+  $weather_cont.append($temp);
   $weather_cont.prepend($im);
 
   tl.set($weather_cont, {left: w - 220, alpha: 0})
@@ -165,14 +170,18 @@ function initializeWeather() {
 
 
 function initializeNews() {
-  var title = "U.S. union urges states to look into T-Mobile purchase of Sprint";
+  var title = titles[0];
   $news_text = $('<p>').text(title);
+  // Not sure we need this rigamarole anymore:
   $('#news_child').append($news_text);
   tl.set($news_text, {alpha: 0});
 
   // Set initial positions:
-  tl.set($news, { x: 130, y: h - 100 });
-  tl.set('#news_child', {width: w - 150});
+  tl.set($news, { x: 50, y: h - 100 });
+  tl.set('#news_child', {width: w - 150}); // needed
+
+  tl.set($news_text, { css: {"position": "relative"}})
+  tl.set($news_text, {left: 50, top: -20})
 }
 
 // =======================================================================================
