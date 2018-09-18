@@ -1,66 +1,45 @@
 
 body {
-    /* If this isn't here, element goes all the way to the right: */
-    position: absolute;
-    font-size: 5px;
-}
-
-canvas {
     margin: 0px;
-}
-
-#news_child {
+    padding: 0px;
     position: absolute;
-    bottom: 0;
-    background-color: aqua;
-    color: white;
-    display: inline;
-    /* padding-left: 120px; */
-}
-
-#greeting {
-    /* This is required: */
-    position: relative;
+  }
+  
+  #greeting {
+    /*Once again we have this issue -- this creates space above canvas:*/
+    font-size: 25px;
+    /*If we give it relative position, we get the annoying top gap:*/
+    position: absolute;
+  }
+  
+  #weather {
+    font-size: 50px;
     background-color: black;
-    /* This puts it on top of the canvas: */
-    z-index: 1; 
-    font-family: Helvetica;
-    font-size: 30px;
-    color: white;
-    opacity: 0;
-    /* Why on earth is this pushing the canvas down?: */
-    /* width: 150px; */
-    /* width: auto; */
-}
-
-#weather_txt {
-    /* position: relative; */
-    /* background-color: blue; */
-    /* z-index: 1; */
-    
-    /* padding-left: 100px; */
-    opacity: 0;
-    float: right;
-}
-
-#weather {
+    /*Huh, this puts it above the canvas*/
+    height: 120px;
+    /*and if we put this, we don't see background:*/
     position: absolute;
-    z-index: 1;
-    display: inline;
-    background-color: green;
+  }
+  
+  .pix {
     font-family: Helvetica;
-    font-size: 40px;
     color: white;
-}
-
-#news {
-    position: relative;
-    background-color: purple;
     z-index: 1;
-    font-family: Helvetica;
-    font-size: 30px;
-    opacity: 0;
-    /* padding: 20px;
-    height: 60px; */
-
-}
+  }
+  
+  #news {
+    position: relative;
+  }
+  
+  #news_child {
+      /*Needed:*/
+      position: absolute;
+      /*Definitely needed:*/
+      bottom: 0;
+      background-color: black;
+      opacity: 0.8;
+      display: inline;
+      font-size: 30px;
+      padding-right: 60px;
+  }
+  
