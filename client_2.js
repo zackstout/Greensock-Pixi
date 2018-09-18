@@ -74,7 +74,6 @@ function setup() {
   beginAnimation();
 }
 
-
 // =======================================================================================
 
 function beginAnimation() {
@@ -98,18 +97,16 @@ function beginAnimation() {
   tl.to($news_text, 0.5, {alpha: 1});
 
 
+  // WAIT i'm pretty sure ADDTITLETODOM is useless, because we are now just changing the text of one element.
+  // We only need to look at the titles array.
   all_titles.push($news_text) // necessary to get first one in the array
   for (let i=0; i < 10; i++) {
     addTitleToDom(i);
   }
 
-  // Huh.... Why isn't this creating a loop of all the images?
-  // Oh duh because we're not splicing the array yet.
   for (let i=1; i < 10; i++) {
     addToTimeline(i);
   }
-
-  console.log('news txt is...', $news_text[0].childNodes[1]);
 }
 
 // =======================================================================================
@@ -131,7 +128,6 @@ function resize(sprite) {
 // =======================================================================================
 
 function addTitleToDom(i) {
-  // console.log(titles);
   const $new_title = $('<p>').text(titles[i]);
   // tl.set($new_title, {alpha: 0});
   $news_text.append($new_title);
@@ -141,13 +137,6 @@ function addTitleToDom(i) {
 // =======================================================================================
 
 function addToTimeline(i) {
-  // This won't work, because loop runs every time, and we just end up with last title:
-  // $news_text.text(title);
-
-  // const allTitles = $news_text[0].childNodes;
-
-  // console.log(all_titles);
-
   // Fade out title:
   tl.to(all_titles[0], 0.6, {alpha: 0}, "+=3");
 
@@ -155,32 +144,11 @@ function addToTimeline(i) {
   tl.to(sprites[0], 0.6, {alpha: 0}, "+=0.3");
   tl.to(sprites[1], 0.6, {alpha: 1}, "-=0.5");
 
-  // Could loop through and set all alpha to 0 if not the current title.
-  // for (let j=0; j < all_titles.length; j++) {
-  //   if (j!==i) {
-  //     tl.set(all_titles[j], {alpha: 0})
-  //   }
-  // }
-
-  // Fade in new title:
-  const offset = 30 * i;
-  // tl.set(all_titles[0], {y: `-=${offset}`})
-  // console.log(all_titles[2][0].innerHTML);
-
-  tl.to(all_titles[0], 0.2, {text: all_titles[2][0].innerHTML})
-
+  // Replace and fade in new title:
+  tl.to(all_titles[0], 0.2, {text: all_titles[i + 1][0].innerHTML}); // Finally got there, it's i + 1
   tl.to(all_titles[0], 0.6, {alpha: 1})
 
   sprites.splice(0, 1);
-
-
-
-  // if (i == 1) all_titles.splice(0, 1);
-  // all_titles.splice(0, 2);
-  // all_titles.splice(0, 1);
-
-
-
 }
 
 // =======================================================================================
